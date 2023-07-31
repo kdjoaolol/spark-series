@@ -1,4 +1,5 @@
 # init & instantiate spark session
+from pprint import pprint
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
@@ -6,16 +7,16 @@ spark = SparkSession.builder.getOrCreate()
 spark.sql("""
     CREATE TEMPORARY VIEW vw_device
     USING org.apache.spark.sql.json
-    OPTIONS (path "/Users/luanmorenomaciel/GitHub/series-spark/docs/files/device/*.json")
+    OPTIONS (path "/home/kdjoaolol/spark-series/docs/files/device/*.json")
 """)
 
 spark.sql("""
 CREATE TEMPORARY VIEW vw_subscription
 USING org.apache.spark.sql.json
-OPTIONS (path "/Users/luanmorenomaciel/GitHub/series-spark/docs/files/subscription/*.json")
+OPTIONS (path "/home/kdjoaolol/spark-series/docs/files/subscription/*.json")
 """)
 
-print(spark.catalog.listTables())
+pprint(spark.catalog.listTables())
 
 # select data
 spark.sql("""SELECT * FROM vw_device LIMIT 10;""").show()
@@ -36,4 +37,4 @@ join_datasets = spark.sql("""
 # info
 join_datasets.show()
 join_datasets.printSchema()
-join_datasets.count()
+pprint(join_datasets.count())

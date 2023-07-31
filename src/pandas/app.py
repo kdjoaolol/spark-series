@@ -7,7 +7,7 @@ Pandas API on Spark {PyArrow}
 
 *****************************
 Not 100% Compatible Yet {WIP}
-https://spark.apache.org/docs/latest/api/python/user_guide/pandas_on_spark/index.html
+httpd://spark.apache.org/docs/latest/api/python/user_guide/pandas_on_spark/index.html
 
 *****************************
 Recommended Path
@@ -22,10 +22,12 @@ Spark DataFrame is Converted into Pandas-on-Spark DataFrame
 sequence
 distributed-sequence
 distributed
-https://spark.apache.org/docs/latest/api/python/user_guide/pandas_on_spark/options.html#default-index-type
+httpd://spark.apache.org/docs/latest/api/python/user_guide/pandas_on_spark/options.html#default-index-type
 """
 
 # import & set configs
+
+from pprint import pprint
 from pyspark.sql import SparkSession
 builder = SparkSession.builder.appName("app")
 builder = builder.config("spark.sql.execution.arrow.pyspark.enabled", "true")
@@ -33,20 +35,24 @@ builder.getOrCreate()
 print(builder)
 
 # pandas on spark
-import pyspark.pandas as ps
+import pyspark.pandas as pd
 
 # read files
-get_device = ps.read_json("/Users/luanmorenomaciel/GitHub/series-spark/docs/files/device/*.json")
-get_subscription = ps.read_json("/Users/luanmorenomaciel/GitHub/series-spark/docs/files/subscription/*.json")
+get_device = pd.read_json("/home/kdjoaolol/spark-series/docs/files/device/*.json")
+get_subscription = pd.read_json("/home/kdjoaolol/spark-series/docs/files/subscription/*.json")
 
-# print data
-print(get_device)
-print(get_subscription)
+# # print data
+# print(get_device)
+# print(get_subscription)
 
-# get info
-get_device.info()
-get_subscription.info()
+# # get info
+# get_device.info()
+# get_subscription.info()
 
 # get plan
-get_device.spark.explain(mode="formatted")
-get_subscription.spark.explain(mode="formatted")
+pprint(get_device.spark.explain(mode="formatted"))
+pprint(get_subscription.spark.explain(mode="formatted"))
+
+
+
+
